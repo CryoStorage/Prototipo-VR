@@ -8,8 +8,8 @@ public class Player_Crawl : MonoBehaviour
     bool r = true;
     Vector3 dir;
     [SerializeField]float speed;
+    [SerializeField]GameObject hand;
     CharacterController con;
-    Vector3 friction;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,30 +21,51 @@ public class Player_Crawl : MonoBehaviour
     {
         Crawl();
         Move();
+        ChangeHand();
 
-        Debug.Log(l);
-        Debug.Log(r);
+        // Debug.Log(l);
+        // Debug.Log(r);
+
+        Debug.Log(dir);
     }
 
     void Crawl()
     {
         if(Input.GetMouseButtonDown(0) && l == true)
         {
-            dir +=(Vector3.forward * speed * Time.fixedDeltaTime);
+            dir +=(transform.forward * speed * Time.fixedDeltaTime);
             l = false;
             r = true;
         }
         if(Input.GetMouseButtonDown(1) && r == true)
         {
-            dir += (Vector3.forward * speed * Time.fixedDeltaTime);
+            dir += (transform.forward * speed * Time.fixedDeltaTime);
             r = false;
             l = true;
         }
     }
 
+    void ChangeHand()
+    {
+        Vector3 rightHand = new Vector3(0.437000006f,-0.0992299914f,0.57099998f);
+        
+        Vector3 leftHand = new Vector3(-0.437000006f,-0.0992299914f,0.57099998f);
+        if(r)
+        {
+            hand.transform.localPosition = rightHand;
+
+        }else
+        {
+            hand.transform.localPosition = leftHand;
+
+        }
+
+    }
+
     void Move()
     {
-        friction = ((dir * -1) / 10);  
+        Vector3 friction = ((dir ) / 2);  
+        dir -= friction * Time.fixedDeltaTime;
         con.Move(dir);
 
     }
