@@ -1937,7 +1937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRigidBody: {fileID: 1140752335}
-  target: {fileID: 11678206}
+  target: {fileID: 701828577}
   frequency: 50
   rotFrequency: 100
   damping: 1
