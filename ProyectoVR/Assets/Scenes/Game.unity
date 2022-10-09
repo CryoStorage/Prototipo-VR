@@ -1653,7 +1653,7 @@ MonoBehaviour:
   - {fileID: 1223882821}
   boneLeghts: []
   solverIterations: 4
-  target: {fileID: 881873642}
+  target: {fileID: 922330746}
 --- !u!1 &739798558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,37 +2043,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: b66dc19358acfd04184875617fff6cf5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae2b390b31555e8449c41f08dc2ae245, type: 3}
---- !u!1 &881873641
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 881873642}
-  m_Layer: 8
-  m_Name: target
-  m_TagString: Player
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &881873642
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881873641}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0732882, y: 0.78641844, z: 0.10402942}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &884969285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,7 +2096,7 @@ MonoBehaviour:
   - {fileID: 2029402670}
   boneLeghts: []
   solverIterations: 4
-  target: {fileID: 881873642}
+  target: {fileID: 1742577260}
 --- !u!1 &910924733 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5195048882033904264, guid: ae2b390b31555e8449c41f08dc2ae245, type: 3}
@@ -2390,7 +2359,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -3094,7 +3063,7 @@ MonoBehaviour:
   m_OriginBaseGameObject: {fileID: 1140752332}
   m_CameraFloorOffsetObject: {fileID: 739798558}
   m_RequestedTrackingOriginMode: 0
-  m_CameraYOffset: 1.1176
+  m_CameraYOffset: 1.7
 --- !u!4 &1140752334
 Transform:
   m_ObjectHideFlags: 0
@@ -3103,7 +3072,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1140752332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4571,7 +4540,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1742577261
 Rigidbody:
