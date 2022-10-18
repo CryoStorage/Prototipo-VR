@@ -19,9 +19,6 @@ public class IkTorso : MonoBehaviour
         Debug.DrawLine(transform.position, chestForward , Color.cyan);
         transform.LookAt(transform.position - (_handsLine * .5f));
         
-        
-
-
     }
     
 }
