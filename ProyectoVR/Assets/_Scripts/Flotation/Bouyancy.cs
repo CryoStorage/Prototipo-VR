@@ -17,20 +17,20 @@ public class Bouyancy : MonoBehaviour
     [SerializeField] private float airDrag = 0f;
     [SerializeField] private float airAngularDrag = 0f;
 
-    private Rigidbody _rb;
+    protected Rigidbody Rb;
     private bool _underWater;
     
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         try
         {
-            _rb = GetComponent<Rigidbody>();
+           Rb = GetComponent<Rigidbody>();
         }
         catch { Debug.Log("Could not find RigidBody"); }
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Float();
     }
@@ -42,7 +42,7 @@ public class Bouyancy : MonoBehaviour
         switch (deltaHeight)
         {
             case <0:
-                _rb.AddForceAtPosition(Vector3.up * floatForce * Mathf.Abs(deltaHeight),transform.position,ForceMode.Force);
+               Rb.AddForceAtPosition(Vector3.up * floatForce * Mathf.Abs(deltaHeight),transform.position,ForceMode.Force);
                 _underWater = true;
                 ChangeState(_underWater);
                 break;
@@ -58,12 +58,12 @@ public class Bouyancy : MonoBehaviour
         switch (state)
         {
             case true:
-                _rb.drag = waterDrag;
-                _rb.angularDrag = waterAngularDrag;
+               Rb.drag = waterDrag;
+               Rb.angularDrag = waterAngularDrag;
                 break;
             case false: 
-                _rb.drag = airDrag;
-                _rb.angularDrag = airAngularDrag;
+               Rb.drag = airDrag;
+               Rb.angularDrag = airAngularDrag;
                 break;
         }
     }
