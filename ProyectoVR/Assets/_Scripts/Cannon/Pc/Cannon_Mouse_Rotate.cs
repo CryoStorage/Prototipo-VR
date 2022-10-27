@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cannon_Mouse_Rotate : Gun_Rotate
 {
-    [SerializeField]private float maxAngleX, maxAngleY = 45f;
+    [SerializeField]private float maxAngleX, maxAngleY = 405f;
     private float _minAngleX, _minAngleY;
     [Tooltip("Sensitivity Multiplier")]
     [SerializeField]private float sens = 1;
@@ -13,8 +13,8 @@ public class Cannon_Mouse_Rotate : Gun_Rotate
     protected override void Start()
     {
         base.Start();
-        _minAngleX = maxAngleX - 360;
-        _minAngleY = maxAngleY - 360;
+        _minAngleX = maxAngleX-60;
+        _minAngleY = maxAngleY-60;
 
     }
 
@@ -37,5 +37,10 @@ public class Cannon_Mouse_Rotate : Gun_Rotate
         // eulers = new Vector3(Mathf.Clamp(eulers.x, _minAngleX, maxAngleX),
         //     Mathf.Clamp(eulers.y, _minAngleY, maxAngleY),0f);
         transform.localEulerAngles = eulers;
+
+        float radX = eulers.x * Mathf.Deg2Rad;
+        float radY = eulers.y * Mathf.Deg2Rad;
+        // Debug.Log("Y Axis" +eulers.x + " degrees are equal to " + radX + " radians.");
+        Debug.Log("X Axis" +eulers.x + " degrees are equal to " + radY + " radians.");
     }
 }
