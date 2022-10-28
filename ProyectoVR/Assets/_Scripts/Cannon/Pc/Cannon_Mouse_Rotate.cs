@@ -41,6 +41,6 @@ public class Cannon_Mouse_Rotate : Gun_Rotate
         float radX = eulers.x * Mathf.Deg2Rad;
         float radY = eulers.y * Mathf.Deg2Rad;
         // Debug.Log("Y Axis" +eulers.x + " degrees are equal to " + radX + " radians.");
-        Debug.Log("X Axis" +eulers.x + " degrees are equal to " + radY + " radians.");
+        // Debug.Log("X Axis" +eulers.x + " degrees are equal to " + radY + " radians.");
     }
 }
