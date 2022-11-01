@@ -7,9 +7,7 @@ public class Debug_CannonFire : MonoBehaviour
 {
     [Tooltip("Object Fired by the cannon")] 
     [SerializeField] private Rigidbody projectile;
-
     [SerializeField] private int maxProjectiles;
-
     [SerializeField] private float launchForce;
     
     private Queue<Canon_CanonBall> _canonBalls;
@@ -35,22 +33,22 @@ public class Debug_CannonFire : MonoBehaviour
 
     private void Launch()
     {
-        if (_current == maxProjectiles)
-        {
-            _current = 0;
-        }
         try
         {
-            _canonBalls.Dequeue().Fire(transform.position,transform.forward,launchForce);
-
+            Canon_CanonBall current = _canonBalls.Dequeue();
+            current.Fire(transform.position,transform.forward,launchForce);
+            Debug.Log("Launched" + current.name);
         }
         catch { Debug.Log("Queue Is empty"); }
     }
 
     public void Reload(Canon_CanonBall canonBall)
     {
-        _canonBalls.Enqueue(canonBall);
-        
+        try
+        {
+            _canonBalls.Enqueue(canonBall);
+        }
+        catch { Debug.Log("Error Queuing");}
     }
     private void BuildPool()
     {
@@ -58,9 +56,8 @@ public class Debug_CannonFire : MonoBehaviour
         for (int i = 0; i < maxProjectiles; i++)
         {
             Rigidbody temp = Instantiate(projectile.GetComponent<Rigidbody>());
+            temp.name = "CanonBall " + i;
             _canonBalls.Enqueue(temp.GetComponent<Canon_CanonBall>());
-            Debug.Log("Added projectile");
         }    
     }
-
 }

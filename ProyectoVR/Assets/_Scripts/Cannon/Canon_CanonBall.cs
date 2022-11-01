@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -9,9 +10,17 @@ public class Canon_CanonBall : MonoBehaviour
     private Debug_CannonFire _cannonFire;
     
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         Prepare();
+    }
+
+    void Start()
+    {
+        _rb.velocity = Vector3.zero;
+        _rb.isKinematic = true;
+        _rend.enabled = false;
+        _col.enabled = false;
     }
 
     private void Deactivate()
@@ -21,21 +30,18 @@ public class Canon_CanonBall : MonoBehaviour
         _rend.enabled = false;
         _col.enabled = false;
         _cannonFire.Reload(this);
-
     }
 
     private void OnCollisionEnter(Collision collisionInfo)
     {
         Explode();
-        Debug.Log(gameObject.name+" Exploded");
     }
 
     private void Activate()
     {
         _rb.isKinematic = false;
-        _rend.enabled = false;
-        _col.enabled = false;
-        
+        _rend.enabled = true;
+        _col.enabled = true;
     }
 
     public void Fire(Vector3 origin,Vector3 dir, float mag)
@@ -43,7 +49,6 @@ public class Canon_CanonBall : MonoBehaviour
         transform.position = origin;
         Activate();
         _rb.AddForce(dir.normalized * mag);
-
     }
 
     void Explode()
@@ -68,5 +73,11 @@ public class Canon_CanonBall : MonoBehaviour
             _col = GetComponent<Collider>();
         }
         catch { Debug.Log("Missing Collider");}
+
+        try
+        {
+            _cannonFire = GameObject.Find("VrCannon").GetComponent<Debug_CannonFire>();
+        }
+        catch { Debug.Log("Missing Debug_CanonFire");}
     }
 }
