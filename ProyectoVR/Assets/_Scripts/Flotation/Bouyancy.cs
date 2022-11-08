@@ -12,22 +12,18 @@ public class Bouyancy : MonoBehaviour
     [SerializeField] private float waterDrag = 4f;
     [SerializeField] private float waterAngularDrag = 2f;
     [SerializeField] private float floatForce = 12f;
-    [SerializeField] private float waterHeight = 0;
+    [SerializeField] protected float waterHeight = 0;
     [Header("Air Parameters")]
     [SerializeField] private float airDrag = 0f;
     [SerializeField] private float airAngularDrag = 0f;
 
     protected Rigidbody Rb;
-    private bool _underWater;
+    protected bool _underWater;
     
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        try
-        {
-           Rb = GetComponent<Rigidbody>();
-        }
-        catch { Debug.Log("Could not find RigidBody"); }
+      
     }
 
     protected virtual void FixedUpdate()
@@ -35,14 +31,14 @@ public class Bouyancy : MonoBehaviour
         Float();
     }
 
-    private void Float()
+    protected virtual void Float()
     {
         float deltaHeight = transform.position.y - waterHeight;
 
         switch (deltaHeight)
         {
             case <0:
-               Rb.AddForceAtPosition(Vector3.up * floatForce * Mathf.Abs(deltaHeight),transform.position,ForceMode.Force);
+               Rb.AddForceAtPosition(FloatForce(deltaHeight),transform.position,ForceMode.Force);
                 _underWater = true;
                 ChangeState(_underWater);
                 break;
@@ -53,7 +49,13 @@ public class Bouyancy : MonoBehaviour
         }
     }
 
-    void ChangeState(bool state)
+    protected Vector3 FloatForce(float deltaHeight)
+    {
+        Vector3 force = Vector3.up * (floatForce * Mathf.Abs(deltaHeight));
+        return force;
+    }
+
+    protected void ChangeState(bool state)
     {
         switch (state)
         {
@@ -80,5 +82,15 @@ public class Bouyancy : MonoBehaviour
         Debug.Log("triggerExit");
         if (!other.CompareTag("WaterLevel")) return;
         waterHeight = 0f;
+    }
+
+    protected virtual void Prepare()
+    {
+        try
+        {
+            Rb = GetComponent<Rigidbody>();
+        }
+        catch { Debug.Log("Could not find RigidBody"); }
+        
     }
 }
