@@ -6,13 +6,14 @@ using UnityEngine;
 public class Boat : Bouyancy
 {
     [SerializeField]private GameObject[] floatPoints = new GameObject[4];
+    [SerializeField]private float rowForce;
     private Vector3[] _floatPoints = new Vector3[4];
     [SerializeField]private GameObject[] movers;
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        Prepare();
-    }
+    
+    private float _maxDelta = 1;
+    private float _lDelta = 0;
+    private float _rDelta = 0;
+    
 
     protected override void Float()
     {
@@ -33,41 +34,42 @@ public class Boat : Bouyancy
                 ChangeState(_underWater);
                 break;
         }
-        
-
+    }
+    
+    private void Update()
+    {
+        CheckInput();
     }
 
     protected override void FixedUpdate()
     {
         GetFloatPoints();
         base.FixedUpdate();
-        
-        
+
     }
 
-    private void OnDrawGizmos()
+    private void CheckInput()
     {
-        Gizmos.color = Color.magenta;
-        foreach (var point in _floatPoints)
+        if (Input.GetKey(KeyCode.A))
         {
-            Gizmos.DrawSphere(point,.3f);
-            Debug.DrawLine(point, transform.up);
-
+            Move(0,-transform.forward * rowForce);
         }
-    }
-
-
-    void Move(Vector3 force, Vector3 point)
-    {
-        if (movers.Length == 0) return;
-        Rb.AddForceAtPosition(force,point,ForceMode.Impulse);
+        if (Input.GetKey(KeyCode.D))
+        {
+            Move(1,-transform.forward * rowForce);
+        }
 
     }
 
-    private Vector3 GetForce()
+    void Move(int mover, Vector3 force)
     {
-        Vector3 result = new Vector3();
-        return result;
+        Rb.AddForceAtPosition(force,movers[mover].transform.position);
+
+    }
+
+    public void KickBack(Vector3 point, Vector3 dir, float mag)
+    {
+        Rb.AddForceAtPosition(dir.normalized * mag ,point);
     }
 
     void GetFloatPoints()
@@ -77,11 +79,4 @@ public class Boat : Bouyancy
             _floatPoints[i] = floatPoints[i].transform.position;
         }
     }
-    
-    protected override void Prepare()
-    {
-        base.Prepare();
-        // movers = new GameObject[movers.Length];
-    }
-    
 }

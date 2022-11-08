@@ -29,8 +29,8 @@ public class Cannon_Mouse_Rotate : Gun_Rotate
     {
         mouseX += Input.GetAxis("Mouse X") * sens;
         mouseY += Input.GetAxis("Mouse Y") * sens;
-        mouseX = Mathf.Clamp(mouseX, _minAngleX, maxAngleX);
-        mouseY = Mathf.Clamp(mouseY, _minAngleY, maxAngleY);
+        // mouseX = Mathf.Clamp(mouseX, _minAngleX, maxAngleX);
+        // mouseY = Mathf.Clamp(mouseY, _minAngleY, maxAngleY);
         Vector3 eulers = transform.localEulerAngles;
 
         eulers = new Vector3(-mouseY, mouseX, 0f);
@@ -40,7 +40,8 @@ public class Cannon_Mouse_Rotate : Gun_Rotate
 
         float radX = eulers.x * Mathf.Deg2Rad;
         float radY = eulers.y * Mathf.Deg2Rad;
-        // Debug.Log("Y Axis" +eulers.x + " degrees are equal to " + radX + " radians.");
-        // Debug.Log("X Axis" +eulers.x + " degrees are equal to " + radY + " radians.");
+        
+        // Debug.Log("Y: " + eulers.x + "X: " + eulers.y);
+        // Debug.Log( radX + radY + " radians.");
     }
 }

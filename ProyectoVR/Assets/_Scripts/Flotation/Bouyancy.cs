@@ -23,7 +23,7 @@ public class Bouyancy : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-      
+      Prepare();
     }
 
     protected virtual void FixedUpdate()

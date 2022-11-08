@@ -2,21 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Debug_CannonFire : MonoBehaviour
 {
-    [Tooltip("Object Fired by the cannon")] 
-    [SerializeField] private Rigidbody projectile;
+    [Tooltip("Object Fired by the cannon")]
+    [SerializeField] private GameObject projectile;
     [SerializeField] private int maxProjectiles;
-    [SerializeField] private float launchForce;
+    [SerializeField] protected float launchForce = 800f;
     
-    private Queue<Canon_CanonBall> _canonBalls;
+    protected Queue<Canon_CanonBall> CanonBalls;
     private int _current;
 
     // Start is called before the first frame update
     void Start()
     {
-        BuildPool();
+        Prepare();
     }
 
     // Update is called once per frame
@@ -31,13 +30,12 @@ public class Debug_CannonFire : MonoBehaviour
         Launch();
     }
 
-    private void Launch()
+    protected virtual void Launch()
     {
         try
         {
-            Canon_CanonBall current = _canonBalls.Dequeue();
+            Canon_CanonBall current = CanonBalls.Dequeue();
             current.Fire(transform.position,transform.forward,launchForce);
-            Debug.Log("Launched" + current.name);
         }
         catch { Debug.Log("Queue Is empty"); }
     }
@@ -46,18 +44,25 @@ public class Debug_CannonFire : MonoBehaviour
     {
         try
         {
-            _canonBalls.Enqueue(canonBall);
+            CanonBalls.Enqueue(canonBall);
         }
         catch { Debug.Log("Error Queuing");}
     }
     private void BuildPool()
     {
-        _canonBalls = new Queue<Canon_CanonBall>();
+        CanonBalls = new Queue<Canon_CanonBall>();
         for (int i = 0; i < maxProjectiles; i++)
         {
-            Rigidbody temp = Instantiate(projectile.GetComponent<Rigidbody>());
+            GameObject temp = Instantiate(projectile);
             temp.name = "CanonBall " + i;
-            _canonBalls.Enqueue(temp.GetComponent<Canon_CanonBall>());
+            temp.GetComponent<Canon_CanonBall>().cannonFire = this;
+            CanonBalls.Enqueue(temp.GetComponent<Canon_CanonBall>());
         }    
+    }
+
+    protected virtual void Prepare()
+    {
+        BuildPool();
+        
     }
 }

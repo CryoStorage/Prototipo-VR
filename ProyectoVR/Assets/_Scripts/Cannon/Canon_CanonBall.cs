@@ -1,13 +1,21 @@
 using System;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Canon_CanonBall : MonoBehaviour
 {
+    [Tooltip("Explosion Radius In Meters")]
+    [SerializeField] private float blastRadius = 100f;
+
+    [Tooltip("Layers with which the cannonball can interact")]
+    [SerializeField] private LayerMask layers;
     private Rigidbody _rb;
     private MeshRenderer _rend;
     private Collider _col;
-    private Debug_CannonFire _cannonFire;
+    [HideInInspector]public Debug_CannonFire cannonFire;
+    [SerializeField]private ParticleSystem[] particleSystems;
     
     // Start is called before the first frame update
     private void Awake()
@@ -29,7 +37,8 @@ public class Canon_CanonBall : MonoBehaviour
         _rb.isKinematic = true;
         _rend.enabled = false;
         _col.enabled = false;
-        _cannonFire.Reload(this);
+        cannonFire.Reload(this);
+        transform.localEulerAngles = Vector3.zero;
     }
 
     private void OnCollisionEnter(Collision collisionInfo)
@@ -47,13 +56,33 @@ public class Canon_CanonBall : MonoBehaviour
     public void Fire(Vector3 origin,Vector3 dir, float mag)
     {
         transform.position = origin;
+        transform.eulerAngles = Vector3.zero;
         Activate();
         _rb.AddForce(dir.normalized * mag);
     }
 
     void Explode()
     {
+        foreach (var particle in particleSystems)
+        {   
+            particle.Clear();
+            particle.Play();
+        }
+        CastDamage();
         Deactivate();
+    }
+
+    void CastDamage()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position,blastRadius,layers);
+        foreach (var hit in hits)
+        {
+            try
+            {
+                hit.GetComponent<Target>();
+            }
+            catch { Debug.LogWarning("Not a target");}
+        }
     }
 
     private void Prepare()
@@ -73,11 +102,5 @@ public class Canon_CanonBall : MonoBehaviour
             _col = GetComponent<Collider>();
         }
         catch { Debug.Log("Missing Collider");}
-
-        try
-        {
-            _cannonFire = GameObject.Find("VrCannon").GetComponent<Debug_CannonFire>();
-        }
-        catch { Debug.Log("Missing Debug_CanonFire");}
     }
 }

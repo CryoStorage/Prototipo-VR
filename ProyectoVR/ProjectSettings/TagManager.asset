@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hit
   - WaterLevel
+  - Cannon
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - 
   - Player
   - Cannon
-  - 
-  - 
+  - Boat
+  - Sea
   - 
   - 
   - 
