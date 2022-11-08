@@ -9,14 +9,14 @@ public class Cannon_Vr_Rotate : Gun_Rotate
     
     protected override void Update()
     {
-        LookAtRotate();
+        AimAtDirection();
     }
 
-    private void LookAtRotate()
+    private void AimAtDirection()
     {
-        Vector3 handlePos = transform.TransformPoint(handle.transform.position);
-        transform.LookAt(handlePos);
-        Debug.DrawRay(transform.position, -(handlePos - transform.position), Color.magenta);
-        Debug.DrawLine(transform.position, handlePos, Color.cyan);
+        Vector3 aimDir = handle.transform.position - transform.position;
+        transform.rotation = Quaternion.LookRotation(-aimDir);
+        // Debug.DrawRay(transform.position, -(handlePos - transform.position), Color.magenta);
+        // Debug.DrawLine(transform.position, handlePos, Color.cyan);
     }
 }
